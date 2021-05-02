@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="org.wit.carapp">
 
+
     <application
         android:name="org.wit.carapp.main.MainApp"
         android:allowBackup="true"

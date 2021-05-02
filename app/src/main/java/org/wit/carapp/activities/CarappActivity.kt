@@ -2,9 +2,9 @@ package org.wit.carapp.activities
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import kotlinx.android.synthetic.main.activity_carapp.*
-import kotlinx.android.synthetic.main.activity_carapp.addMake
-import kotlinx.android.synthetic.main.card_car.*
 import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.info
 import org.jetbrains.anko.toast
@@ -22,21 +22,45 @@ class CarappActivity : AppCompatActivity(), AnkoLogger {
         setContentView(R.layout.activity_carapp)
         app = application as MainApp
 
+        if (intent.hasExtra("car_edit")) {
+            car = intent.extras?.getParcelable<CarappModel>("car_edit")!!
+            addMake.setText(car.make)
+            addModel.setText(car.model)
+            addYear.setText(car.year)
+        }
+
         btnAdd.setOnClickListener() {
             car.make = addMake.text.toString()
             car.model = addModel.text.toString()
             car.year = addYear.text.toString()
             if (car.make.isNotEmpty()) {
-                app.cars.add(car.copy())
+                app.cars.create(car.copy())
                 info("add Button Pressed: ${car}")
-                for (i in app.cars.indices) {
-                    info("Car[$i]:${app.cars[i]}")
-                }
                 setResult(AppCompatActivity.RESULT_OK)
                 finish()
             } else {
                 toast("Please Enter a Make")
             }
         }
+        //cancel toolbar
+        toolbarAdd.title = title
+
+
+    }
+
+    //cancel toolbar
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_car, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    //cancel toolbar
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item?.itemId) {
+            R.id.item_cancel -> {
+                finish()
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 }
