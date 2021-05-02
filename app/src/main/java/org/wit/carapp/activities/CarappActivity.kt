@@ -43,7 +43,7 @@ class CarappActivity : AppCompatActivity(), AnkoLogger {
             }
         }
         //cancel toolbar
-        toolbarAdd.title = title
+
 
 
     }
