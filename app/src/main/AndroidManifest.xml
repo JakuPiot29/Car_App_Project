@@ -2,7 +2,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="org.wit.carapp">
 
-
     <application
         android:name="org.wit.carapp.main.MainApp"
         android:allowBackup="true"
@@ -10,16 +9,10 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.CarApp">
-
-        <activity android:name=".activities.CarappActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+        android:theme="@style/Theme.Car">
+        <activity android:name=".activities.CarActivity">
         </activity>
-        <activity android:name=".activities.CarappListActivity">
+        <activity android:name=".activities.CarListActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>

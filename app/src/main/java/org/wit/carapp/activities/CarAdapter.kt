@@ -4,26 +4,22 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import kotlinx.android.synthetic.main.activity_car.view.*
 import kotlinx.android.synthetic.main.card_car.view.*
+import kotlinx.android.synthetic.main.card_car.view.carMake
 import org.wit.carapp.R
-import org.wit.carapp.models.CarappModel
+import org.wit.carapp.helpers.readImageFromPath
+import org.wit.carapp.models.CarModel
 
 interface CarListener {
-    fun onCarClick(car: CarappModel)
+    fun onCarClick(car: CarModel)
 }
 
-class CarAdapter constructor(private var cars: List<CarappModel>,
-                             private val listener: CarListener) :
-        RecyclerView.Adapter<CarAdapter.MainHolder>() {
+class CarAdapter constructor(private var cars: List<CarModel>,
+                                   private val listener: CarListener) : RecyclerView.Adapter<CarAdapter.MainHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MainHolder {
-        return MainHolder(
-                LayoutInflater.from(parent.context).inflate(
-                        R.layout.card_car,
-                        parent,
-                        false
-                )
-        )
+        return MainHolder(LayoutInflater.from(parent?.context).inflate(R.layout.card_car, parent, false))
     }
 
     override fun onBindViewHolder(holder: MainHolder, position: Int) {
@@ -35,11 +31,11 @@ class CarAdapter constructor(private var cars: List<CarappModel>,
 
     class MainHolder constructor(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-        fun bind(car: CarappModel, listener: CarListener) {
+        fun bind(car: CarModel,  listener : CarListener) {
             itemView.carMake.text = car.make
-            itemView.carModel.text = car.model
-            itemView.carYear.text = car.year
-            itemView.setOnClickListener { listener.onCarClick(car)}
+            itemView.model.text = car.model
+            itemView.imageIcon.setImageBitmap(readImageFromPath(itemView.context, car.image))
+            itemView.setOnClickListener { listener.onCarClick(car) }
         }
     }
 }
