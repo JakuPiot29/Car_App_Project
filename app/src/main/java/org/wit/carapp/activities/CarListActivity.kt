@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.activity_car_list.*
 import org.jetbrains.anko.intentFor
@@ -11,10 +12,13 @@ import org.wit.carapp.R
 import org.wit.carapp.main.MainApp
 import org.jetbrains.anko.startActivityForResult
 import org.wit.carapp.models.CarModel
+import java.net.ResponseCache
 
 class CarListActivity : AppCompatActivity(), CarListener {
 
     lateinit var app: MainApp
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -23,7 +27,10 @@ class CarListActivity : AppCompatActivity(), CarListener {
 
         val layoutManager = LinearLayoutManager(this)
         recyclerView.layoutManager = layoutManager
-        recyclerView.adapter = CarAdapter(app.cars.findAll(), this)
+        recyclerView.adapter = CarAdapter(app.cars.findAll(), this )
+
+        loadCars()
+
 
         toolbar.title = title
         setSupportActionBar(toolbar)
@@ -45,9 +52,23 @@ class CarListActivity : AppCompatActivity(), CarListener {
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        //recyclerView is a widget in activity_placemark_list.xml
+        loadCars()
+        //recyclerView is a widget in activity_car_list.xml
         recyclerView.adapter?.notifyDataSetChanged()
         super.onActivityResult(requestCode, resultCode, data)
+
     }
+
+    private fun loadCars() {
+        showCars(app.cars.findAll())
+    }
+
+    fun showCars (cars: List<CarModel>) {
+        recyclerView.adapter = CarAdapter(cars, this)
+        recyclerView.adapter?.notifyDataSetChanged()
+    }
+
+
+
 }
 

@@ -11,4 +11,5 @@
     <string name="select_car_image">Select Car Image</string>
     <string name="change_car_image">Change Image</string>
     <string name="car_image">Car Image</string>
+    <string name="menu_deleteCar">Delete</string>
 </resources>

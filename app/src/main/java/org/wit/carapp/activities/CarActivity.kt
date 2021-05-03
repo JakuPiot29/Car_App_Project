@@ -5,7 +5,10 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import androidx.recyclerview.widget.ItemTouchHelper
+import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.activity_car.*
+import kotlinx.android.synthetic.main.activity_car_list.*
 import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.info
 import org.jetbrains.anko.toast
@@ -15,9 +18,12 @@ import org.wit.carapp.helpers.readImageFromPath
 import org.wit.carapp.helpers.showImagePicker
 import org.wit.carapp.main.MainApp
 import org.wit.carapp.models.CarModel
+import java.util.*
 
 
 class CarActivity : AppCompatActivity(), AnkoLogger {
+
+
 
     var car = CarModel()
     lateinit var app : MainApp
@@ -28,6 +34,8 @@ class CarActivity : AppCompatActivity(), AnkoLogger {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_car)
         app = application as MainApp
+
+
 
         if (intent.hasExtra("car_edit")) {
             edit = true
@@ -66,13 +74,19 @@ class CarActivity : AppCompatActivity(), AnkoLogger {
         }
     }
 
+
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu_car, menu)
+        if (edit && menu != null) menu.getItem(0).setVisible(true)
         return super.onCreateOptionsMenu(menu)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item?.itemId) {
+            R.id.item_delete -> {
+                app.cars.delete(car)
+                finish()
+            }
             R.id.item_cancel -> {
                 finish()
             }

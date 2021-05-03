@@ -10,6 +10,7 @@ import kotlinx.android.synthetic.main.card_car.view.carMake
 import org.wit.carapp.R
 import org.wit.carapp.helpers.readImageFromPath
 import org.wit.carapp.models.CarModel
+import java.util.*
 
 interface CarListener {
     fun onCarClick(car: CarModel)
@@ -36,6 +37,12 @@ class CarAdapter constructor(private var cars: List<CarModel>,
             itemView.model.text = car.model
             itemView.imageIcon.setImageBitmap(readImageFromPath(itemView.context, car.image))
             itemView.setOnClickListener { listener.onCarClick(car) }
+
         }
     }
+
+
+
+
+
 }
