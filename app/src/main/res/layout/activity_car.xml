@@ -64,6 +64,26 @@
                     android:padding="8dp"
                     android:textSize="14sp" />
 
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:padding="9dp"
+                    android:textSize="14sp"
+                    android:layout_marginLeft="7dp"
+                    android:text="Car Year"/>
+
+                <NumberPicker
+                    android:id="@+id/carYear"
+                    android:layout_width="match_parent"
+                    android:layout_height="120dp"
+                    android:layout_margin="8dp"
+                    android:autofillHints=""
+                    android:hint="@string/hint_carYear"
+                    android:maxLines="1"
+                    android:padding="8dp"
+                    android:text="Car Year"
+                    android:textSize="36sp" />
+
                 <Button
                     android:id="@+id/chooseImage"
                     android:layout_width="match_parent"

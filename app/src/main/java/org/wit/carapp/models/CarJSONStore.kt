@@ -44,6 +44,7 @@ class CarJSONStore : CarStore, AnkoLogger {
         if (foundCar != null) {
             foundCar.make = car.make
             foundCar.model = car.model
+            foundCar.year = car.year
             foundCar.image = car.image
 
         }

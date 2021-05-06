@@ -35,6 +35,7 @@ class CarAdapter constructor(private var cars: List<CarModel>,
         fun bind(car: CarModel,  listener : CarListener) {
             itemView.carMake.text = car.make
             itemView.model.text = car.model
+            itemView.year.text = car.year.toString()
             itemView.imageIcon.setImageBitmap(readImageFromPath(itemView.context, car.image))
             itemView.setOnClickListener { listener.onCarClick(car) }
 

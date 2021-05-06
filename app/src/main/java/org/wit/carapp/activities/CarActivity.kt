@@ -35,6 +35,10 @@ class CarActivity : AppCompatActivity(), AnkoLogger {
         setContentView(R.layout.activity_car)
         app = application as MainApp
 
+        carYear.minValue = 1950
+        carYear.maxValue = 2021
+        carYear.wrapSelectorWheel = true
+
 
 
         if (intent.hasExtra("car_edit")) {
@@ -52,6 +56,7 @@ class CarActivity : AppCompatActivity(), AnkoLogger {
         btnAdd.setOnClickListener() {
             car.make = carMake.text.toString()
             car.model = carModel.text.toString()
+            car.year = carYear.value.toShort()
             if (car.make.isEmpty()) {
                 toast(R.string.enter_car_make)
             } else {

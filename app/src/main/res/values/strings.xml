@@ -3,6 +3,7 @@
     <string name="button_addCar">Add Car</string>
     <string name="hint_carMake">Car Make</string>
     <string name="hint_carModel">Car Model</string>
+    <string name="hint_carYear">Car Year</string>
     <string name="menu_addCar">Add</string>
     <string name="menu_cancelCar">Cancel</string>
     <string name="enter_car_make">Please enter a Make </string>
