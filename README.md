@@ -21,7 +21,7 @@ This project is part of my college module Mobile App Development. This app allow
 * Users can update/delete cars
 
 To-do list:
-* Allows users to add multiple images
+* Allow users to add multiple images
 * Add sorting/filtering
 
 ## Status
