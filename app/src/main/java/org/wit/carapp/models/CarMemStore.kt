@@ -29,6 +29,7 @@ class CarMemStore : CarStore, AnkoLogger {
             foundCar.make = car.make
             foundCar.model = car.model
             foundCar.year = car.year
+            foundCar.engine = car.engine
             foundCar.image = car.image
             logAll()
         }

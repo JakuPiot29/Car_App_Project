@@ -37,7 +37,15 @@ class CarActivity : AppCompatActivity(), AnkoLogger {
 
         carYear.minValue = 1950
         carYear.maxValue = 2021
-        carYear.wrapSelectorWheel = true
+        carYear.wrapSelectorWheel = false
+        carYear.setValue(2021)
+
+
+
+
+
+
+
 
 
 
@@ -54,21 +62,49 @@ class CarActivity : AppCompatActivity(), AnkoLogger {
         }
 
         btnAdd.setOnClickListener() {
+
             car.make = carMake.text.toString()
             car.model = carModel.text.toString()
             car.year = carYear.value.toShort()
-            if (car.make.isEmpty()) {
+            car.engine = carEngine.text.toString().toDouble()
+
+            if (car.make.trim().length == 0) {
                 toast(R.string.enter_car_make)
-            } else {
+                recreate()
+            }
+            else if (car.model.trim().length == 0) {
+                toast(R.string.enter_car_model)
+                recreate()
+            }
+            else if (car.model.trim().length == 0) {
+                toast(R.string.enter_car_model)
+                recreate()
+            }
+            else if (car.engine <= 0 || car.engine.toString().isEmpty()) {
+                toast(R.string.enter_car_engine)
+                recreate()
+            }
+
+
+            else {
                 if (edit) {
                     app.cars.update(car.copy())
+                    info("add Button Pressed: $carMake")
+                    setResult(RESULT_OK)
+                    finish()
+
                 } else {
                     app.cars.create(car.copy())
+                    info("add Button Pressed: $carMake")
+                    setResult(RESULT_OK)
+                    finish()
+
                 }
+
             }
-            info("add Button Pressed: $carMake")
-            setResult(AppCompatActivity.RESULT_OK)
-            finish()
+
+
+
         }
 
         toolbarAdd.title = title
@@ -111,4 +147,21 @@ class CarActivity : AppCompatActivity(), AnkoLogger {
             }
         }
     }
+
+    fun validate(): Boolean {
+        if (car.make.isEmpty()){
+            carMake.setError("Please enter a make")
+            return false
+        }
+        if (car.model.isEmpty()){
+            carModel.setError("Please enter a model")
+            return false
+        }
+        if (car.engine.toString().isEmpty()){
+            carEngine.setError("Please enter an engine size")
+            return false
+        }
+        return true
+    }
+
 }

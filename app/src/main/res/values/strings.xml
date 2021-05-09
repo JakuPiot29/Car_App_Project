@@ -4,9 +4,13 @@
     <string name="hint_carMake">Car Make</string>
     <string name="hint_carModel">Car Model</string>
     <string name="hint_carYear">Car Year</string>
+    <string name="hint_engineSize">Engine Size</string>
     <string name="menu_addCar">Add</string>
     <string name="menu_cancelCar">Cancel</string>
     <string name="enter_car_make">Please enter a Make </string>
+    <string name="enter_car_model">Please enter a Model </string>
+    <string name="enter_car_engine">Please enter a valid engine size </string>
+    <string name="enter_car_image">Please add an image </string>
     <string name="save_car">Save Car </string>
     <string name="button_addImage">Add Image </string>
     <string name="select_car_image">Select Car Image</string>
