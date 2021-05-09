@@ -71,6 +71,7 @@ class CarActivity : AppCompatActivity(), AnkoLogger {
             if (car.make.trim().length == 0) {
                 toast(R.string.enter_car_make)
                 recreate()
+
             }
             else if (car.model.trim().length == 0) {
                 toast(R.string.enter_car_model)
@@ -84,6 +85,10 @@ class CarActivity : AppCompatActivity(), AnkoLogger {
                 toast(R.string.enter_car_engine)
                 recreate()
             }
+            else if (car.image.isEmpty()) {
+                toast(R.string.enter_car_image)
+                recreate()
+            }
 
 
             else {
@@ -92,12 +97,15 @@ class CarActivity : AppCompatActivity(), AnkoLogger {
                     info("add Button Pressed: $carMake")
                     setResult(RESULT_OK)
                     finish()
+                    toast(R.string.car_updated)
+
 
                 } else {
                     app.cars.create(car.copy())
                     info("add Button Pressed: $carMake")
                     setResult(RESULT_OK)
                     finish()
+                    toast(R.string.car_added)
 
                 }
 
@@ -127,6 +135,7 @@ class CarActivity : AppCompatActivity(), AnkoLogger {
             R.id.item_delete -> {
                 app.cars.delete(car)
                 finish()
+                toast(R.string.car_deleted)
             }
             R.id.item_cancel -> {
                 finish()
@@ -148,20 +157,6 @@ class CarActivity : AppCompatActivity(), AnkoLogger {
         }
     }
 
-    fun validate(): Boolean {
-        if (car.make.isEmpty()){
-            carMake.setError("Please enter a make")
-            return false
-        }
-        if (car.model.isEmpty()){
-            carModel.setError("Please enter a model")
-            return false
-        }
-        if (car.engine.toString().isEmpty()){
-            carEngine.setError("Please enter an engine size")
-            return false
-        }
-        return true
-    }
+
 
 }

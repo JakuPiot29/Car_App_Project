@@ -11,6 +11,9 @@
     <string name="enter_car_model">Please enter a Model </string>
     <string name="enter_car_engine">Please enter a valid engine size </string>
     <string name="enter_car_image">Please add an image </string>
+    <string name="car_deleted">Car deleted </string>
+    <string name="car_updated">Car updated </string>
+    <string name="car_added">Car added </string>
     <string name="save_car">Save Car </string>
     <string name="button_addImage">Add Image </string>
     <string name="select_car_image">Select Car Image</string>
