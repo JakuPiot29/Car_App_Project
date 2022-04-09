@@ -8,6 +8,7 @@ import android.view.MenuItem
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.activity_car.*
+import kotlinx.android.synthetic.main.activity_car.view.*
 import kotlinx.android.synthetic.main.activity_car_list.*
 import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.info
@@ -54,6 +55,8 @@ class CarActivity : AppCompatActivity(), AnkoLogger {
             car = intent.extras?.getParcelable<CarModel>("car_edit")!!
             carMake.setText(car.make)
             carModel.setText(car.model)
+            carYear.value = car.year
+            carEngine.setText(car.engine.toString())
             carImage.setImageBitmap(readImageFromPath(this, car.image))
             if (car.image != null) {
                 chooseImage.setText(R.string.change_car_image)
@@ -65,29 +68,28 @@ class CarActivity : AppCompatActivity(), AnkoLogger {
 
             car.make = carMake.text.toString()
             car.model = carModel.text.toString()
-            car.year = carYear.value.toShort()
+            car.year = carYear.value
             car.engine = carEngine.text.toString().toDouble()
 
             if (car.make.trim().length == 0) {
                 toast(R.string.enter_car_make)
-                recreate()
 
             }
             else if (car.model.trim().length == 0) {
                 toast(R.string.enter_car_model)
-                recreate()
+
             }
             else if (car.model.trim().length == 0) {
                 toast(R.string.enter_car_model)
-                recreate()
+
             }
             else if (car.engine <= 0 || car.engine.toString().isEmpty()) {
                 toast(R.string.enter_car_engine)
-                recreate()
+
             }
             else if (car.image.isEmpty()) {
                 toast(R.string.enter_car_image)
-                recreate()
+
             }
 
 
