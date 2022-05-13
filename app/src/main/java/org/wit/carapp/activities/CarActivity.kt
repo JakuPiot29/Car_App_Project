@@ -3,8 +3,11 @@ package org.wit.carapp.activities
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log.i
 import android.view.Menu
 import android.view.MenuItem
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.activity_car.*
@@ -14,16 +17,16 @@ import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.info
 import org.jetbrains.anko.toast
 import org.wit.carapp.R
+import org.wit.carapp.databinding.ActivityCarBinding
 import org.wit.carapp.helpers.readImage
 import org.wit.carapp.helpers.readImageFromPath
 import org.wit.carapp.helpers.showImagePicker
 import org.wit.carapp.main.MainApp
 import org.wit.carapp.models.CarModel
 import java.util.*
-
+import timber.log.Timber.i
 
 class CarActivity : AppCompatActivity(), AnkoLogger {
-
 
 
     var car = CarModel()
@@ -37,9 +40,9 @@ class CarActivity : AppCompatActivity(), AnkoLogger {
         app = application as MainApp
 
         carYear.minValue = 1950
-        carYear.maxValue = 2021
+        carYear.maxValue = 2022
         carYear.wrapSelectorWheel = false
-        carYear.setValue(2021)
+        carYear.setValue(2022)
 
 
 
@@ -123,7 +126,13 @@ class CarActivity : AppCompatActivity(), AnkoLogger {
         chooseImage.setOnClickListener {
             showImagePicker(this, IMAGE_REQUEST)
         }
+
+
+
+
     }
+
+
 
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -158,6 +167,8 @@ class CarActivity : AppCompatActivity(), AnkoLogger {
             }
         }
     }
+
+
 
 
 

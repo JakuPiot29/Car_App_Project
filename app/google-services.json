@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "305985268884",
+    "project_id": "car-app-349920",
+    "storage_bucket": "car-app-349920.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:305985268884:android:377e372207c612c8461881",
+        "android_client_info": {
+          "package_name": "org.wit.carapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "305985268884-lpbhhqhkm64abm03r3u5tm4nb7bj6btb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB5zWL_cR-Yl8-2o42BXsC6uX8_6pEPDOw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "305985268884-lpbhhqhkm64abm03r3u5tm4nb7bj6btb.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -2,7 +2,9 @@ package org.wit.carapp.activities
 
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
 import android.view.*
+import androidx.activity.result.ActivityResultLauncher
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -17,13 +19,14 @@ import java.net.ResponseCache
 class CarListActivity : AppCompatActivity(), CarListener {
 
     lateinit var app: MainApp
-
-
+    private lateinit var refreshIntentLauncher : ActivityResultLauncher<Intent>
+    lateinit var presenter: CarListActivity
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_car_list)
         app = application as MainApp
+
 
         val layoutManager = LinearLayoutManager(this)
         recyclerView.layoutManager = layoutManager
@@ -43,7 +46,8 @@ class CarListActivity : AppCompatActivity(), CarListener {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.item_add -> startActivityForResult<CarActivity>(0)
-        }
+            R.id.item_logout -> { presenter.doLogout() }
+            }
         return super.onOptionsItemSelected(item)
     }
 
@@ -59,6 +63,9 @@ class CarListActivity : AppCompatActivity(), CarListener {
 
     }
 
+
+
+
     private fun loadCars() {
         showCars(app.cars.findAll())
     }
@@ -66,6 +73,12 @@ class CarListActivity : AppCompatActivity(), CarListener {
     fun showCars (cars: List<CarModel>) {
         recyclerView.adapter = CarAdapter(cars, this)
         recyclerView.adapter?.notifyDataSetChanged()
+    }
+
+    fun doLogout() {
+        val intent = Intent(this, LoginView::class.java)
+        startActivity(intent)
+        finish()
     }
 
 

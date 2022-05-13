@@ -10,3 +10,4 @@ data class CarModel(var id: Long = 0,
                           var year: Int = 0,
                           var engine: Double = 0.0,
                           var image: String = "") : Parcelable
+

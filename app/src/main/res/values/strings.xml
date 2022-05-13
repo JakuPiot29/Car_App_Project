@@ -20,4 +20,12 @@
     <string name="change_car_image">Change Image</string>
     <string name="car_image">Car Image</string>
     <string name="menu_deleteCar">Delete</string>
+    <string name="login_screen">Sign Up/Login to Car App</string>
+    <string name="logout">Logout</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="log_in">Log In</string>
+    <string name="hint_email">Email</string>
+    <string name="hint_password">Password</string>
+    <string name="button_location">Set Location</string>
+    <string name="engine_size">Engine Size</string>
 </resources>
