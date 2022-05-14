@@ -14,7 +14,7 @@
 
         <ImageView
             android:id="@+id/imageIcon"
-            android:contentDescription="@string/car_image"
+            android:contentDescription="@string/change_car_image"
             android:layout_width="124dp"
             android:layout_height="94dp"
 

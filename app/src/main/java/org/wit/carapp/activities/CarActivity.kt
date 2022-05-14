@@ -1,48 +1,50 @@
 package org.wit.carapp.activities
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
+import android.net.Uri
 import android.os.Bundle
-import android.util.Log.i
 import android.view.Menu
 import android.view.MenuItem
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.recyclerview.widget.ItemTouchHelper
-import androidx.recyclerview.widget.RecyclerView
+import androidx.appcompat.app.AppCompatActivity
+import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_car.*
-import kotlinx.android.synthetic.main.activity_car.view.*
-import kotlinx.android.synthetic.main.activity_car_list.*
+import kotlinx.android.synthetic.main.activity_car.carMake
+import kotlinx.android.synthetic.main.card_car.*
 import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.info
 import org.jetbrains.anko.toast
 import org.wit.carapp.R
 import org.wit.carapp.databinding.ActivityCarBinding
-import org.wit.carapp.helpers.readImage
-import org.wit.carapp.helpers.readImageFromPath
 import org.wit.carapp.helpers.showImagePicker
 import org.wit.carapp.main.MainApp
 import org.wit.carapp.models.CarModel
-import java.util.*
 import timber.log.Timber.i
 
 class CarActivity : AppCompatActivity(), AnkoLogger {
-
-
+    private lateinit var imageIntentLauncher : ActivityResultLauncher<Intent>
+    private lateinit var binding: ActivityCarBinding
     var car = CarModel()
     lateinit var app : MainApp
     var edit = false
-    val IMAGE_REQUEST = 1
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_car)
+
+        registerImagePickerCallback()
+        binding = ActivityCarBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        binding.toolbarAdd.title = title
+        setSupportActionBar(binding.toolbarAdd)
+
         app = application as MainApp
 
         carYear.minValue = 1950
         carYear.maxValue = 2022
         carYear.wrapSelectorWheel = false
-        carYear.setValue(2022)
+        carYear.value = 2022
 
 
 
@@ -60,19 +62,23 @@ class CarActivity : AppCompatActivity(), AnkoLogger {
             carModel.setText(car.model)
             carYear.value = car.year
             carEngine.setText(car.engine.toString())
-            carImage.setImageBitmap(readImageFromPath(this, car.image))
-            if (car.image != null) {
-                chooseImage.setText(R.string.change_car_image)
+            Picasso.get()
+                .load(car.image)
+                .into(binding.carImage)
+            if (car.image != Uri.EMPTY) {
+                binding.chooseImage.setText(R.string.change_car_image)
             }
             btnAdd.setText(R.string.save_car)
         }
 
         btnAdd.setOnClickListener() {
 
+
             car.make = carMake.text.toString()
             car.model = carModel.text.toString()
             car.year = carYear.value
             car.engine = carEngine.text.toString().toDouble()
+
 
             if (car.make.trim().length == 0) {
                 toast(R.string.enter_car_make)
@@ -86,14 +92,19 @@ class CarActivity : AppCompatActivity(), AnkoLogger {
                 toast(R.string.enter_car_model)
 
             }
-            else if (car.engine <= 0 || car.engine.toString().isEmpty()) {
+            else if (car.engine <= 0 || car.engine.toString() == null) {
                 toast(R.string.enter_car_engine)
 
             }
-            else if (car.image.isEmpty()) {
+            else if (car.image == Uri.EMPTY) {
                 toast(R.string.enter_car_image)
 
             }
+
+
+
+
+
 
 
             else {
@@ -120,12 +131,19 @@ class CarActivity : AppCompatActivity(), AnkoLogger {
 
         }
 
-        toolbarAdd.title = title
+       /** toolbarAdd.title = title
         setSupportActionBar(toolbarAdd)
+       **/
 
-        chooseImage.setOnClickListener {
-            showImagePicker(this, IMAGE_REQUEST)
+
+        binding.chooseImage.setOnClickListener {
+            showImagePicker(imageIntentLauncher)
+            toast(R.string.enter_car_image)
         }
+
+      /**  chooseImage.setOnClickListener {
+            showImagePicker(this, IMAGE_REQUEST)
+        }**/
 
 
 
@@ -135,14 +153,14 @@ class CarActivity : AppCompatActivity(), AnkoLogger {
 
 
 
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.menu_car, menu)
-        if (edit && menu != null) menu.getItem(0).setVisible(true)
+        if (edit) menu.getItem(0).isVisible = true
         return super.onCreateOptionsMenu(menu)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item?.itemId) {
+        when (item.itemId) {
             R.id.item_delete -> {
                 app.cars.delete(car)
                 finish()
@@ -154,7 +172,7 @@ class CarActivity : AppCompatActivity(), AnkoLogger {
         }
         return super.onOptionsItemSelected(item)
     }
-
+/**
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         when (requestCode) {
@@ -168,8 +186,28 @@ class CarActivity : AppCompatActivity(), AnkoLogger {
         }
     }
 
+    **/
 
 
+private fun registerImagePickerCallback() {
+    imageIntentLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult())
+        { result ->
+            when(result.resultCode){
+                RESULT_OK -> {
+                    if (result.data != null) {
+                        i("Got Result ${result.data!!.data}")
+                        car.image = result.data!!.data!!
+                        Picasso.get()
+                            .load(car.image)
+                            .into(binding.carImage)
+                        binding.chooseImage.setText(R.string.change_car_image)
+                    } // end of if
+                }
+                RESULT_CANCELED -> { } else -> { }
+            }
+        }
+}
 
 
 }

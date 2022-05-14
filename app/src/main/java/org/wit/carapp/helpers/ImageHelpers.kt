@@ -10,14 +10,18 @@ import android.net.Uri
 import org.wit.carapp.R
 import java.io.IOException
 
-fun showImagePicker(parent: Activity, id: Int) {
-    val intent = Intent()
-    intent.type = "image/*"
-    intent.action = Intent.ACTION_OPEN_DOCUMENT
-    intent.addCategory(Intent.CATEGORY_OPENABLE)
-    val chooser = Intent.createChooser(intent, R.string.select_car_image.toString())
-    parent.startActivityForResult(chooser, id)
-}
+
+import androidx.activity.result.ActivityResultLauncher
+
+
+//fun showImagePicker(parent: Activity, id: Int) {
+  //  val intent = Intent()
+ //   intent.type = "image/*"
+ //   intent.action = Intent.ACTION_OPEN_DOCUMENT
+  //  intent.addCategory(Intent.CATEGORY_OPENABLE)
+   // val chooser = Intent.createChooser(intent, R.string.select_car_image.toString())
+   // parent.startActivityForResult(chooser, id)
+//}
 
 fun readImage(activity: Activity, resultCode: Int, data: Intent?): Bitmap? {
     var bitmap: Bitmap? = null
@@ -46,4 +50,19 @@ fun readImageFromPath(context: Context, path : String) : Bitmap? {
         }
     }
     return bitmap
+}
+
+
+
+
+
+
+
+
+
+fun showImagePicker(intentLauncher : ActivityResultLauncher<Intent>) {
+var chooseFile = Intent(Intent.ACTION_OPEN_DOCUMENT)
+chooseFile.type = "image/*"
+chooseFile = Intent.createChooser(chooseFile, R.string.select_car_image.toString())
+intentLauncher.launch(chooseFile)
 }

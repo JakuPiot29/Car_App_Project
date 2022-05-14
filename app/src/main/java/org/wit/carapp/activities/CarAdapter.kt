@@ -4,10 +4,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_car.view.*
 import kotlinx.android.synthetic.main.card_car.view.*
 import kotlinx.android.synthetic.main.card_car.view.carMake
 import org.wit.carapp.R
+import org.wit.carapp.databinding.CardCarBinding
 import org.wit.carapp.helpers.readImageFromPath
 import org.wit.carapp.models.CarModel
 import java.util.*
@@ -30,21 +32,21 @@ class CarAdapter constructor(private var cars: List<CarModel>,
 
     override fun getItemCount(): Int = cars.size
 
-    class MainHolder constructor(itemView: View) : RecyclerView.ViewHolder(itemView) {
+      class MainHolder constructor(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         fun bind(car: CarModel,  listener : CarListener) {
             itemView.carMake.text = car.make
             itemView.model.text = car.model
             itemView.year.text = car.year.toString()
             itemView.engine.text = car.engine.toString()
-            itemView.imageIcon.setImageBitmap(readImageFromPath(itemView.context, car.image))
+        /**    itemView.imageIcon.setImageBitmap(readImageFromPath(itemView.context, car.image))**/
+            Picasso.get().load(car.image).into(itemView.imageIcon)
             itemView.setOnClickListener { listener.onCarClick(car) }
 
         }
+
     }
 
-
-
-
-
 }
+
+

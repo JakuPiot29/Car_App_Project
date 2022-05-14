@@ -1,34 +1,41 @@
 package org.wit.carapp.models
 
 import android.content.Context
-import com.google.gson.Gson
-import com.google.gson.GsonBuilder
+import android.net.Uri
+import com.google.gson.*
 import com.google.gson.reflect.TypeToken
-import org.jetbrains.anko.AnkoLogger
+import org.wit.carapp.helpers.exists
+import org.wit.carapp.helpers.read
+import org.wit.carapp.helpers.write
+import org.wit.carapp.models.CarModel
+import org.wit.carapp.models.CarStore
 import org.wit.carapp.helpers.*
+import timber.log.Timber
+import java.lang.reflect.Type
 import java.util.*
 
-val JSON_FILE = "cars.json"
-val gsonBuilder = GsonBuilder().setPrettyPrinting().create()
-val listType = object : TypeToken<java.util.ArrayList<CarModel>>() {}.type
+const val JSON_FILE = "cars.json"
+val gsonBuilder: Gson = GsonBuilder().setPrettyPrinting()
+    .registerTypeAdapter(Uri::class.java, UriParser())
+    .create()
+val listType: Type = object : TypeToken<ArrayList<CarModel>>() {}.type
 
 fun generateRandomId(): Long {
     return Random().nextLong()
 }
 
-class CarJSONStore : CarStore, AnkoLogger {
+class CarJSONStore(private val context: Context) : CarStore {
 
-    val context: Context
     var cars = mutableListOf<CarModel>()
 
-    constructor (context: Context) {
-        this.context = context
+    init {
         if (exists(context, JSON_FILE)) {
             deserialize()
         }
     }
 
     override fun findAll(): MutableList<CarModel> {
+        logAll()
         return cars
     }
 
@@ -38,9 +45,9 @@ class CarJSONStore : CarStore, AnkoLogger {
         serialize()
     }
 
+
     override fun update(car: CarModel) {
-        val placemarksList = findAll() as ArrayList<CarModel>
-        var foundCar: CarModel? = placemarksList.find { p -> p.id == car.id }
+        var foundCar: CarModel? = cars.find { p -> p.id == car.id }
         if (foundCar != null) {
             foundCar.make = car.make
             foundCar.model = car.model
@@ -64,6 +71,28 @@ class CarJSONStore : CarStore, AnkoLogger {
 
     private fun deserialize() {
         val jsonString = read(context, JSON_FILE)
-        cars = Gson().fromJson(jsonString, listType)
+        cars = gsonBuilder.fromJson(jsonString, listType)
+    }
+
+    private fun logAll() {
+        cars.forEach { Timber.i("$it") }
+    }
+}
+
+class UriParser : JsonDeserializer<Uri>,JsonSerializer<Uri> {
+    override fun deserialize(
+        json: JsonElement?,
+        typeOfT: Type?,
+        context: JsonDeserializationContext?
+    ): Uri {
+        return Uri.parse(json?.asString)
+    }
+
+    override fun serialize(
+        src: Uri?,
+        typeOfSrc: Type?,
+        context: JsonSerializationContext?
+    ): JsonElement {
+        return JsonPrimitive(src.toString())
     }
 }
