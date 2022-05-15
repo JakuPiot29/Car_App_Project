@@ -25,7 +25,9 @@ class CarListActivity : AppCompatActivity(), CarListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-       /** setContentView(R.layout.activity_car_list)**/
+
+
+        /** setContentView(R.layout.activity_car_list)**/
 
         binding = ActivityCarListBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -41,6 +43,7 @@ class CarListActivity : AppCompatActivity(), CarListener {
 
         loadCars()
         registerRefreshCallback()
+        registerMapCallback()
 
         toolbar.title = title
         setSupportActionBar(toolbar)
@@ -53,8 +56,14 @@ class CarListActivity : AppCompatActivity(), CarListener {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.item_add -> startActivityForResult<CarActivity>(0)
-            R.id.item_logout -> { doLogout() }
+            R.id.item_logout -> {
+                doLogout()
             }
+            R.id.item_map -> {
+                val launcherIntent = Intent(this, CarMapsActivity::class.java)
+                refreshIntentLauncher.launch(launcherIntent)
+            }
+        }
         return super.onOptionsItemSelected(item)
     }
     override fun onCarClick(car: CarModel) {
@@ -92,6 +101,12 @@ class CarListActivity : AppCompatActivity(), CarListener {
         val intent = Intent(this, LoginView::class.java)
         startActivity(intent)
         finish()
+    }
+
+    private fun registerMapCallback() {
+        refreshIntentLauncher =
+            registerForActivityResult(ActivityResultContracts.StartActivityForResult())
+            { }
     }
 
 
