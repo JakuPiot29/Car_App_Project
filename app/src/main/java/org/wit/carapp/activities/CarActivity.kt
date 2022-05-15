@@ -1,6 +1,8 @@
 package org.wit.carapp.activities
 
 import android.content.Intent
+
+
 import android.net.Uri
 import android.os.Bundle
 import android.view.Menu
@@ -21,14 +23,16 @@ import org.wit.carapp.helpers.showImagePicker
 import org.wit.carapp.main.MainApp
 import org.wit.carapp.models.CarModel
 import timber.log.Timber.i
+import org.wit.carapp.models.Location
 
 class CarActivity : AppCompatActivity(), AnkoLogger {
     private lateinit var imageIntentLauncher : ActivityResultLauncher<Intent>
     private lateinit var binding: ActivityCarBinding
+    private lateinit var mapIntentLauncher : ActivityResultLauncher<Intent>
     var car = CarModel()
     lateinit var app : MainApp
     var edit = false
-
+    //var location = Location(52.245696, -7.139102, 15f)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,7 +52,7 @@ class CarActivity : AppCompatActivity(), AnkoLogger {
 
 
 
-
+        registerMapCallback()
 
 
 
@@ -141,6 +145,18 @@ class CarActivity : AppCompatActivity(), AnkoLogger {
             toast(R.string.enter_car_image)
         }
 
+        binding.carLocation.setOnClickListener {
+            val location = Location(52.245696, -7.139102, 15f)
+            if (car.zoom != 0f) {
+                location.lat =  car.lat
+                location.lng = car.lng
+                location.zoom = car.zoom
+            }
+            val launcherIntent = Intent(this, MapActivity::class.java)
+                .putExtra("location", location)
+            mapIntentLauncher.launch(launcherIntent)
+        }
+
       /**  chooseImage.setOnClickListener {
             showImagePicker(this, IMAGE_REQUEST)
         }**/
@@ -208,6 +224,27 @@ private fun registerImagePickerCallback() {
             }
         }
 }
+
+
+    private fun registerMapCallback() {
+        mapIntentLauncher =
+            registerForActivityResult(ActivityResultContracts.StartActivityForResult())
+            { result ->
+                when (result.resultCode) {
+                    RESULT_OK -> {
+                        if (result.data != null) {
+                            i("Got Location ${result.data.toString()}")
+                            val location = result.data!!.extras?.getParcelable<Location>("location")!!
+                            i("Location == $location")
+                            car.lat = location.lat
+                            car.lng = location.lng
+                            car.zoom = location.zoom
+                        } // end of if
+                    }
+                    RESULT_CANCELED -> { } else -> { }
+                }
+            }
+    }
 
 
 }

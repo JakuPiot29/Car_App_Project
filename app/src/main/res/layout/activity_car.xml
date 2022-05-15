@@ -115,11 +115,10 @@
                     android:id="@+id/carLocation"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="16dp"
+                    android:layout_margin="8dp"
                     android:background="@color/design_default_color_secondary_variant"
                     android:paddingBottom="8dp"
                     android:paddingTop="8dp"
-                    android:stateListAnimator="@null"
                     android:text="@string/button_location"
                     android:textColor="@color/design_default_color_on_primary"
                     android:textSize="16sp"/>

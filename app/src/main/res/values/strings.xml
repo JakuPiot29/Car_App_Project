@@ -28,4 +28,5 @@
     <string name="hint_password">Password</string>
     <string name="button_location">Set Location</string>
     <string name="engine_size">Engine Size</string>
+    <string name="title_activity_map">Map</string>
 </resources>

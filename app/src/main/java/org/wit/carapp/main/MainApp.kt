@@ -10,6 +10,7 @@ import org.wit.carapp.models.CarMemStore
 import org.wit.carapp.models.CarStore
 import org.wit.carapp.models.CarJSONStore
 import timber.log.Timber
+import timber.log.Timber.i
 
 class MainApp : Application(), AnkoLogger {
 
@@ -20,6 +21,6 @@ class MainApp : Application(), AnkoLogger {
         super.onCreate()
         Timber.plant(Timber.DebugTree())
         cars = CarJSONStore(applicationContext)
-        toast("Car App started")
+        i("Car App started")
     }
 }

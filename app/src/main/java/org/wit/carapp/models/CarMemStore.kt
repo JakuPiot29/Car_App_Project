@@ -31,6 +31,9 @@ class CarMemStore : CarStore, AnkoLogger {
             foundCar.year = car.year
             foundCar.engine = car.engine
             foundCar.image = car.image
+            foundCar.lat = car.lat
+            foundCar.lng = car.lng
+            foundCar.zoom = car.zoom
             logAll()
         }
     }
