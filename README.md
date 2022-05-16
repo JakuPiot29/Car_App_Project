@@ -33,7 +33,7 @@ To-do list:
 * Add sorting/filtering
 * Add cars to a database so that users can have individual lists of cars
 * When setting the location of a car, get the users current location and point the marker to this location
-* Bugs: eninge field validation, loading images, adding car without setting location
+* Bugs: engine field validation, loading images, adding car without setting location
 
 ## Status
 Project is: in progress
