@@ -20,8 +20,10 @@ This project is part of my college module Mobile App Development. This app allow
 
 ## Technologies
 * Android Studio
+* Kotlin
 
 ## Features
+* Users can register, login, logout
 * Users can add pictures from their phone gallery
 * Users can update/delete cars
 * Users can view cars on a map
